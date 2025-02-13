@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link href='https://fonts.googleapis.com/css?family=Baloo Bhai 2' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple">
+    <link rel="stylesheet" href="style.css">
+    <title>Valentine Day</title>
+    
+</head>
+<body>
+    <div class="container">
+        <video id="videoDisplay" class="video" src="/gif/front.mp4" autoplay></video>
+        <h1 id="question">I Love You... Will You be my Valentine?</h1>
+        <div id="responseButtons">
+            <button id="yes">Yes 💖</button>
+            <button id="no" onclick="moveButton">No 😢</button>
+        </div>
+    </div>
+</body>
+
+
+
+<script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    const yes = document.getElementById('yes');
+    const no = document.getElementById('no');
+    const videoDisplay = document.getElementById('videoDisplay');
+    const responseButtons = document.getElementById('responseButtons');
+    const question = document.getElementById('question');
+    
+    let noClickCount = 0;
+    let buttonHeight = 48;
+    let buttonWidth = 20;
+    let fontSize = 20;
+    const videopaths = [
+        "/gif/gif_1.mp4",
+        "/gif/gif_2.mp4",
+        "/gif/gif_3.mp4",
+        "/gif/gif_4.mp4",
+        "/gif/gif_6.mp4",
+        "/gif/gif_7.mp4"
+        
+    ];
+
+    no.addEventListener('click', function() {
+        if (noClickCount < 5) {
+            noClickCount++;
+            videoDisplay.src = videopaths[noClickCount];
+            buttonHeight += 17;
+            buttonWidth += 25;
+            fontSize += 20;
+            if (noClickCount < 6) {
+                no.textContent = [" Why are you Choosing No", "Are you sure?", "Please dont do it with me!", "Are man vi jao na cuttie....!", "NO"][noClickCount - 1];
+            }
+        }
+        else {
+        // Move the button to a random position
+        no.textContent = "No";
+        const container = document.querySelector('.container');
+        const containerRect = container.getBoundingClientRect();
+        const maxX = containerRect.width - no.offsetWidth;
+        const maxY = containerRect.height - no.offsetHeight;
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+        no.style.position = 'absolute';
+        no.style.left = `${randomX}px`;
+        no.style.top = `${randomY}px`;
+        }
+    });
+
+    yes.addEventListener('click', () => {
+        videoDisplay.src = "/gif/gif_5.mp4";
+        question.textContent = "Yayyyy! I knew it you will accept my proposal";
+        responseButtons.style.display = 'none';
+        confetti();
+    });
+
+    
+</script>
+</html>
